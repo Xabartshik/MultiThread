@@ -1,4 +1,5 @@
 ﻿#include <omp.h>
+//Для активации omp.h необходимо добавить галочку в настройках проекта, тем самым подключив еще и библиотеку
 #include <iostream>
 #include <chrono>
 #include "matrix.h"

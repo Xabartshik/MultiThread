@@ -72,12 +72,12 @@ public:
         vector<vector<T>> result(rows1, vector<T>(cols2, 0));
         //https://learn.microsoft.com/ru-ru/cpp/parallel/openmp/reference/openmp-directives?view=msvc-170. 
         // Приводит к тому, что работа в цикле for внутри параллельного региона будет разделена между потоками.
-        #pragma omp parallel for
-        //і: переменная индекса в операторе For директивы ОрепМР должна иметь тип целого со знаком
+#pragma omp parallel for
+//і: переменная индекса в операторе For директивы ОрепМР должна иметь тип целого со знаком
         for (long long int i = 0; i < rows1; ++i) {
-            for (long long int  j = 0; j < cols2; ++j) {
+            for (long long int j = 0; j < cols2; ++j) {
                 T sum = 0;
-                for (long long int  k = 0; k < cols1; ++k) {
+                for (long long int k = 0; k < cols1; ++k) {
                     sum += matrix1[i][k] * matrix2[k][j];
                 }
                 result[i][j] = sum;
