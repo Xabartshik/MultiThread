@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -96,4 +97,37 @@ public:
             cout << endl;
         }
     }
+
 };
+
+// Функция тестирования
+void testMultiplication() {
+    // Тест 1: Маленькие матрицы
+    vector<vector<int>> m1 = { {1, 2}, {3, 4} };
+    vector<vector<int>> m2 = { {5, 6}, {7, 8} };
+    vector<vector<int>> expected = { {19, 22}, {43, 50} };
+
+    auto seq_result = MatrixOperations<int>::multiplyMatrices(m1, m2);
+    auto par_result = MatrixOperations<int>::multiplyMatricesParallel(m1, m2);
+
+    assert(seq_result == expected && "Sequential multiplication failed");
+    assert(par_result == expected && "Parallel multiplication failed");
+
+    // Тест 2: Неквадратные матрицы
+    vector<vector<double>> m3 = { {1.0, 2.0, 3.0}, {4.0, 5.0, 6.0} };
+    vector<vector<double>> m4 = { {7.0, 8.0}, {9.0, 10.0}, {11.0, 12.0} };
+    vector<vector<double>> expected2 = { {58.0, 64.0}, {139.0, 154.0} };
+
+    auto seq_result2 = MatrixOperations<double>::multiplyMatrices(m3, m4);
+    auto par_result2 = MatrixOperations<double>::multiplyMatricesParallel(m3, m4);
+
+    assert(seq_result2.size() == expected2.size() && "Size mismatch");
+    for (size_t i = 0; i < seq_result2.size(); ++i) {
+        for (size_t j = 0; j < seq_result2[0].size(); ++j) {
+            assert(abs(seq_result2[i][j] - expected2[i][j]) < 1e-9 && "Sequential multiplication failed");
+            assert(abs(par_result2[i][j] - expected2[i][j]) < 1e-9 && "Parallel multiplication failed");
+        }
+    }
+
+    cout << "All tests passed successfully!\n";
+}
